@@ -79,17 +79,19 @@ public class MultiOffMode : Mode
 	public override Player CheckTurn(){
 
 		Player currentPlayer = GameManager.Instance.currentPlayer;
-
+		Player previousPlayer = null;
 		while (true) {
 			if (currentPlayer == player) {
 				currentPlayer = player2;
+				previousPlayer = player;
 			} else {
 				currentPlayer = player;
+				previousPlayer = player2;
 			}
 
 			bool bottlesExist = FieldManager.Instance.CheckBottleExistence (currentPlayer, currentPlayer.currentRow);
 
-			if (bottlesExist)
+			if (bottlesExist || previousPlayer.currentScore >= 50)
 				break;
 			else 
 				GameManager.Instance.SetPlayerToNextRow (currentPlayer);
